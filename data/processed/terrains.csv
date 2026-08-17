@@ -1,0 +1,15 @@
+id,name,buildable,tags,yield_gold,yield_food,yield_production,yield_science,yield_culture,yield_faith
+city_center,城市中心,False,city_center,2.0,2.0,1.0,0.0,0.0,0.0
+grassland,草地,True,buildable|fertile|flat|grassland,0.0,2.0,0.0,0.0,0.0,0.0
+plains,平原,True,buildable|fertile|flat|plains,0.0,1.0,1.0,0.0,0.0,0.0
+desert,沙漠,True,arid|buildable|desert|flat,0.0,0.0,0.0,0.0,0.0,0.0
+tundra,冻土,True,buildable|cold|flat|tundra,0.0,1.0,0.0,0.0,0.0,0.0
+mountain,山脉,False,mountain,0.0,0.0,0.0,0.0,0.0,0.0
+lake,湖泊,False,lake|natural|water,1.0,1.0,0.0,0.0,0.0,0.0
+coast,浅海,True,buildable|coast|water,1.0,1.0,0.0,0.0,0.0,0.0
+ocean,深海,False,ocean|water,0.0,0.0,0.0,0.0,0.0,0.0
+volcanic,火山岩,True,buildable|hill|volcanic,0.0,0.0,2.0,0.0,0.0,0.0
+savanna,稀树草原,True,buildable|flat|savanna,1.0,1.0,0.0,0.0,0.0,0.0
+snow,冰原,False,cold|frozen|snow,0.0,0.0,0.0,0.0,0.0,0.0
+river_valley,河谷,True,buildable|fertile|flat|river_valley,1.0,2.0,0.0,0.0,0.0,0.0
+plateau,高原,True,buildable|flat|plateau,0.0,0.0,1.0,1.0,0.0,0.0

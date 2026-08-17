@@ -1,0 +1,16 @@
+id,description,target_tree,target_layer,reduction_percent
+eureka_first_improvement,建造第一个改良设施,science,1,50
+eureka_first_district,建造第一个区域,policy,1,50
+eureka_pop_3,人口达到3,faith,1,50
+eureka_2_improvements,拥有2+种不同改良类型,science,2,30
+eureka_farms_3,拥有3+农田,science,2,25
+eureka_ring_complete,完成一整环地块,policy,2,30
+eureka_pop_5,人口达到5,faith,2,30
+eureka_water_tiles_5,拥有5+水域地块,science,3,25
+eureka_mountain_adj,任意建筑旁有3+山脉,science,3,25
+eureka_3_districts,拥有3+不同区域类型,policy,3,30
+eureka_natural_5,拥有5+natural标签地块,faith,3,30
+eureka_pop_10,人口达到10,faith,3,25
+eureka_tiles_15,已工作地块达到15,science,4,25
+eureka_luxury_3,拥有3+不同奢侈资源,policy,4,25
+eureka_score_200,当前得分达到200,faith,4,25

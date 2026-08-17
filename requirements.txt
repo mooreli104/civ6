@@ -1,0 +1,6 @@
+tensorflow-cpu==2.20.0
+numpy>=1.26
+pandas>=2.2
+pyarrow>=16
+requests>=2.31
+tabulate>=0.9

@@ -1,0 +1,13 @@
+id,name,production_cost,max_level,upgrade_primary_yield,available_from_start,requires_tags,tags,n_adjacency_rules,yield_gold,yield_food,yield_production,yield_science,yield_culture,yield_faith
+campus,学院,15,99,science,True,buildable,campus|district|science_district,3,0.0,0.0,0.0,2.0,0.0,0.0
+commercial_hub,商业中心,15,99,gold,True,buildable,commercial_hub|district|gold_district,2,3.0,0.0,0.0,0.0,0.0,0.0
+holy_site,圣地,15,99,faith,True,buildable,district|faith_district|holy_site,2,0.0,0.0,0.0,0.0,0.0,2.0
+theater_square,剧院广场,15,99,culture,True,buildable,culture_district|district|theater_square,2,0.0,0.0,0.0,0.0,2.0,0.0
+industrial_zone,工业区,15,99,production,True,buildable,district|industrial_zone|production_district,2,0.0,0.0,2.0,0.0,0.0,0.0
+harbor,港口,15,99,gold,False,buildable,district|gold_district|harbor,1,3.0,1.0,0.0,0.0,0.0,0.0
+aqueduct,水渠,15,99,food,False,buildable,aqueduct|district,2,0.0,1.0,1.0,0.0,0.0,0.0
+barracks,军营,15,99,production,False,buildable,barracks|district|production_district,1,0.0,0.0,2.0,1.0,0.0,0.0
+entertainment,娱乐中心,15,99,culture,False,buildable,culture_district|district|entertainment,1,1.0,0.0,0.0,0.0,2.0,0.0
+government_plaza,政府广场,20,99,gold,False,buildable,district|government_plaza,1,1.0,0.0,0.0,1.0,1.0,0.0
+monastery_district,修道院区,15,99,faith,False,buildable,district|faith_district|monastery_district,2,0.0,0.0,0.0,0.0,1.0,2.0
+university,大学城,20,99,science,False,buildable,district|science_district|university,1,0.0,0.0,0.0,3.0,1.0,0.0

@@ -1,0 +1,13 @@
+id,name,removable,tags,mod_gold,mod_food,mod_production,mod_science,mod_culture,mod_faith
+hills,丘陵,False,hill,0.0,0.0,1.0,0.0,0.0,0.0
+forest,森林,True,forest|vegetation,0.0,0.0,1.0,0.0,0.0,0.0
+rainforest,雨林,True,rainforest|vegetation,0.0,1.0,0.0,0.0,0.0,0.0
+oasis,绿洲,False,natural|oasis,1.0,3.0,0.0,0.0,0.0,0.0
+marsh,沼泽,True,marsh,0.0,1.0,-1.0,0.0,0.0,0.0
+river,河流,False,river,1.0,1.0,0.0,0.0,0.0,0.0
+reef,珊瑚礁,False,natural|reef,1.0,0.0,0.0,1.0,0.0,0.0
+geothermal,地热,False,geothermal|natural,0.0,0.0,1.0,1.0,0.0,0.0
+cliff,悬崖,False,cliff,0.0,0.0,1.0,0.0,0.0,0.0
+floodplain,洪泛平原,False,floodplain,0.0,2.0,0.0,0.0,0.0,0.0
+old_growth,老林,False,natural|old_growth|vegetation,0.0,0.0,2.0,1.0,0.0,0.0
+volcanic_soil,火山灰土,False,volcanic_soil,0.0,1.0,1.0,0.0,0.0,0.0

@@ -1,0 +1,143 @@
+{
+  "default_config": {
+    "maxTurns": 40,
+    "initialGold": 10,
+    "foodPerPop": 2,
+    "baseGrowthFood": 8,
+    "growthFoodPerPop": 4,
+    "productionPerUpgrade": 10,
+    "districtUpgradeCost": 20,
+    "rerollCost": 2,
+    "sellRefundRatio": 0.5,
+    "shopCardCount": 4,
+    "hexUnlockCostRing2": 5,
+    "hexUnlockCostRing3": 10,
+    "hexUnlockCostRing4": 20,
+    "maxRerollsPerTurn": 3,
+    "victoryGoalType": "score",
+    "victoryGoalTarget": 800
+  },
+  "victory_goals": [
+    {
+      "type": "score",
+      "name": "\u7efc\u5408\u5f97\u5206",
+      "icon": "\ud83c\udfc6",
+      "description": "\u7ec8\u5c40\u5f97\u5206\uff08\u79d1\u6280+\u6587\u5316+\u4fe1\u4ef0\u7d2f\u79ef\uff09\u8fbe\u5230\u76ee\u6807",
+      "defaultTarget": 800,
+      "minTarget": 100,
+      "maxTarget": 5000,
+      "step": 50
+    },
+    {
+      "type": "population",
+      "name": "\u4eba\u53e3\u7e41\u8363",
+      "icon": "\ud83d\udc65",
+      "description": "\u4eba\u53e3\u6570\u91cf\u8fbe\u5230\u76ee\u6807",
+      "defaultTarget": 30,
+      "minTarget": 5,
+      "maxTarget": 60,
+      "step": 1
+    },
+    {
+      "type": "gold",
+      "name": "\u9ec4\u91d1\u5e1d\u56fd",
+      "icon": "\ud83d\udcb0",
+      "description": "\u7ec8\u5c40\u91d1\u5e01\u50a8\u5907\u8fbe\u5230\u76ee\u6807",
+      "defaultTarget": 2000,
+      "minTarget": 100,
+      "maxTarget": 10000,
+      "step": 100
+    },
+    {
+      "type": "faith",
+      "name": "\u4fe1\u4ef0\u4e4b\u5dc5",
+      "icon": "\ud83d\ude4f",
+      "description": "\u7ec8\u5c40\u4fe1\u4ef0\u4f59\u989d\u8fbe\u5230\u76ee\u6807",
+      "defaultTarget": 1000,
+      "minTarget": 100,
+      "maxTarget": 5000,
+      "step": 50
+    },
+    {
+      "type": "science",
+      "name": "\u79d1\u6280\u98de\u8dc3",
+      "icon": "\ud83d\udd2c",
+      "description": "\u7ec8\u5c40\u79d1\u6280\u50a8\u5907\u8fbe\u5230\u76ee\u6807",
+      "defaultTarget": 500,
+      "minTarget": 50,
+      "maxTarget": 3000,
+      "step": 50
+    },
+    {
+      "type": "culture",
+      "name": "\u6587\u5316\u76db\u4e16",
+      "icon": "\ud83c\udfad",
+      "description": "\u7ec8\u5c40\u6587\u5316\u4f59\u989d\u8fbe\u5230\u76ee\u6807",
+      "defaultTarget": 1000,
+      "minTarget": 100,
+      "maxTarget": 5000,
+      "step": 50
+    }
+  ],
+  "shop_levels": [
+    {
+      "level": 1,
+      "tierWeights": [
+        70,
+        25,
+        5
+      ]
+    },
+    {
+      "level": 2,
+      "tierWeights": [
+        40,
+        45,
+        15
+      ]
+    },
+    {
+      "level": 3,
+      "tierWeights": [
+        15,
+        45,
+        40
+      ]
+    },
+    {
+      "level": 4,
+      "tierWeights": [
+        5,
+        30,
+        65
+      ]
+    }
+  ],
+  "factions": [
+    "maritime",
+    "highland",
+    "pastoral",
+    "wilderness",
+    "woodland"
+  ],
+  "tech_thresholds": {
+    "science": [
+      4,
+      20,
+      60,
+      150
+    ],
+    "policy": [
+      6,
+      25,
+      70,
+      170
+    ],
+    "faith": [
+      6,
+      25,
+      70,
+      170
+    ]
+  }
+}

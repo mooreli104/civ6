@@ -1,0 +1,15 @@
+improvement_id,match_tag,mode,description,bonus_gold,bonus_food,bonus_production,bonus_science,bonus_culture,bonus_faith
+farm,farm,per_each,每个相邻农场 +1🌾,0.0,1.0,0.0,0.0,0.0,0.0
+mine,mine,per_two,每2个相邻矿山 +1⚙️,0.0,0.0,1.0,0.0,0.0,0.0
+trading_post,district,per_each,每个相邻区域 +1🪙,1.0,0.0,0.0,0.0,0.0,0.0
+plantation,luxury_resource,flat_if_any,若有相邻奢侈资源 +1🪙,1.0,0.0,0.0,0.0,0.0,0.0
+solar_farm,arid,per_each,每个相邻沙漠 +1⚙️,0.0,0.0,1.0,0.0,0.0,0.0
+hunting_ground,cold,per_two,每2个相邻冻土 +1🌾,0.0,1.0,0.0,0.0,0.0,0.0
+fishery,reef,per_each,每个相邻珊瑚礁 +1🪙,1.0,0.0,0.0,0.0,0.0,0.0
+quarry,mountain,per_each,每个相邻山脉 +1⚙️,0.0,0.0,1.0,0.0,0.0,0.0
+lighthouse,water,per_each,每个相邻水域 +1🔬,0.0,0.0,0.0,1.0,0.0,0.0
+terrace,mountain,per_each,每个相邻山脉 +1🌾,0.0,1.0,0.0,0.0,0.0,0.0
+observatory,mountain,per_each,每个相邻山脉 +1🔬,0.0,0.0,0.0,1.0,0.0,0.0
+monastery,natural,per_each,每个相邻自然地貌 +1🙏,0.0,0.0,0.0,0.0,0.0,1.0
+vineyard,luxury_resource,flat_if_any,若有相邻奢侈资源 +1🪙,1.0,0.0,0.0,0.0,0.0,0.0
+bazaar,improvement,per_two,每2个相邻改良 +1🪙,1.0,0.0,0.0,0.0,0.0,0.0

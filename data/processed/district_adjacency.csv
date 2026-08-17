@@ -1,0 +1,21 @@
+district_id,match_tag,mode,description,bonus_gold,bonus_food,bonus_production,bonus_science,bonus_culture,bonus_faith
+campus,mountain,per_each,每个相邻山脉 +1🔬,0.0,0.0,0.0,1.0,0.0,0.0
+campus,vegetation,per_two,每2个相邻植被 +1🔬,0.0,0.0,0.0,1.0,0.0,0.0
+campus,district,per_two,每2个相邻区域 +1🔬,0.0,0.0,0.0,1.0,0.0,0.0
+commercial_hub,water,flat_if_any,若相邻水域 +2🪙,2.0,0.0,0.0,0.0,0.0,0.0
+commercial_hub,district,per_two,每2个相邻区域 +1🪙,1.0,0.0,0.0,0.0,0.0,0.0
+holy_site,mountain,per_each,每个相邻山脉 +1🙏,0.0,0.0,0.0,0.0,0.0,1.0
+holy_site,natural,per_each,每个相邻自然地貌 +1🙏,0.0,0.0,0.0,0.0,0.0,1.0
+theater_square,district,per_two,每2个相邻区域 +1🎭,0.0,0.0,0.0,0.0,1.0,0.0
+theater_square,natural,per_each,每个相邻自然地貌 +1🎭,0.0,0.0,0.0,0.0,1.0,0.0
+industrial_zone,mine,per_each,每个相邻矿山 +1⚙️,0.0,0.0,1.0,0.0,0.0,0.0
+industrial_zone,district,per_two,每2个相邻区域 +1⚙️,0.0,0.0,1.0,0.0,0.0,0.0
+harbor,water,per_each,每个相邻水域 +1🪙,1.0,0.0,0.0,0.0,0.0,0.0
+aqueduct,farm,per_each,每个相邻农田 +1🌾,0.0,1.0,0.0,0.0,0.0,0.0
+aqueduct,water,flat_if_any,若相邻水域 +2🌾,0.0,2.0,0.0,0.0,0.0,0.0
+barracks,industrial_zone,per_each,每个相邻工业区 +1⚙️,0.0,0.0,1.0,0.0,0.0,0.0
+entertainment,district,per_two,每2个相邻区域 +1🎭,0.0,0.0,0.0,0.0,1.0,0.0
+government_plaza,district,per_each,每个相邻区域 +1🪙,1.0,0.0,0.0,0.0,0.0,0.0
+monastery_district,natural,per_each,每个相邻自然地貌 +1🙏,0.0,0.0,0.0,0.0,0.0,1.0
+monastery_district,district,per_two,每2个相邻区域 +1🎭,0.0,0.0,0.0,0.0,1.0,0.0
+university,campus,per_each,每个相邻学院 +2🔬,0.0,0.0,0.0,2.0,0.0,0.0

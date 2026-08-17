@@ -1,0 +1,13 @@
+{
+  "name": "civ6-model-training",
+  "private": true,
+  "type": "module",
+  "description": "Node-side bridge for the Civ 6 roguelike engine used to generate training data.",
+  "scripts": {
+    "bridge": "tsx src/env/bridge.ts"
+  },
+  "dependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,91 @@
+id,tree,tree_resource,layer,parent_id,name,description,n_effects,effect_types,unlocks,faction_boost,faction_boost_amount,layer_threshold
+S-A,science,science,1,,石工术,矿山+1⚙️,1,buff_improvement,,highland,15,4
+S-B,science,science,1,,航海术,解锁「渔场」,1,unlock_improvement,fishery,maritime,15,4
+S-AA,science,science,2,S-A,深层开采,解锁「采石场」,1,unlock_improvement,quarry,highland,20,20
+S-AB,science,science,2,S-A,冶金术,改良升级费用-30%,1,reduce_cost,,highland,20,20
+S-BA,science,science,2,S-B,灯塔工程,解锁「灯塔」,1,unlock_improvement,lighthouse,maritime,20,20
+S-BB,science,science,2,S-B,港口规划,解锁「港口」区域,1,unlock_district,harbor,maritime,20,20
+S-AAA,science,science,3,S-AA,火山冶炼,火山岩+1⚙️+1🔬,1,buff_terrain,,highland,25,60
+S-AAB,science,science,3,S-AA,隧道工程,山脉可工作，产出2⚙️,1,make_workable,,highland,25,60
+S-ABA,science,science,3,S-AB,标准化生产,区域建造费用-25%,1,reduce_cost,,highland,25,60
+S-ABB,science,science,3,S-AB,工业改革,工业区+2⚙️,1,buff_district,,highland,25,60
+S-BAA,science,science,3,S-BA,天文观测,解锁「天文台」,1,unlock_improvement,observatory,maritime,25,60
+S-BAB,science,science,3,S-BA,珊瑚研究,珊瑚礁+1🔬+1🪙,1,buff_feature,,maritime,25,60
+S-BBA,science,science,3,S-BB,水利工程,解锁「水渠」区域,1,unlock_district,aqueduct,maritime,25,60
+S-BBB,science,science,3,S-BB,梯田农业,解锁「梯田」,1,unlock_improvement,terrace,maritime,25,60
+S-AAAA,science,science,4,S-AAA,地质勘探,采石场每相邻volcanic: +1⚙️,1,add_adjacency,,highland,30,150
+S-AAAB,science,science,4,S-AAA,矿脉网络,矿山每相邻mine: +1⚙️,1,add_adjacency,,highland,30,150
+S-AABA,science,science,4,S-AAB,山脉学府,学院每相邻mountain: 额外+1🔬,1,add_adjacency,,highland,30,150
+S-AABB,science,science,4,S-AAB,高原开发,高原+1⚙️+1🔬,1,buff_terrain,,highland,30,150
+S-ABAA,science,science,4,S-ABA,军事工程,解锁「军营」区域,1,unlock_district,barracks,highland,30,150
+S-ABAB,science,science,4,S-ABA,高效建材,所有建造费用额外-20%,1,reduce_cost,,highland,30,150
+S-ABBA,science,science,4,S-ABB,蒸汽动力,所有改良+1⚙️,1,buff_all_improvements,,highland,30,150
+S-ABBB,science,science,4,S-ABB,精密仪器,学院+2🔬,1,buff_district,,highland,30,150
+S-BAAA,science,science,4,S-BAA,深空探索,天文台+2🔬,1,buff_improvement,,maritime,30,150
+S-BAAB,science,science,4,S-BAA,海洋科学,浅海+1🔬+1🌾,1,buff_terrain,,maritime,30,150
+S-BABA,science,science,4,S-BAB,远洋航行,深海可工作，产出1🔬+1🪙,1,make_workable,,maritime,30,150
+S-BABB,science,science,4,S-BAB,航海图鉴,灯塔每相邻water: 额外+1🔬,1,add_adjacency,,maritime,30,150
+S-BBAA,science,science,4,S-BBA,大坝工程,水渠每相邻farm: +1🌾,1,add_adjacency,,maritime,30,150
+S-BBAB,science,science,4,S-BBA,灌溉网络,农田每相邻water: +1🌾,1,add_adjacency,,maritime,30,150
+S-BBBA,science,science,4,S-BBB,阶梯灌溉,梯田+1🌾+1⚙️,1,buff_improvement,,maritime,30,150
+S-BBBB,science,science,4,S-BBB,高山水库,梯田每相邻mountain: 额外+1🌾,1,add_adjacency,,maritime,30,150
+P-A,policy,culture,1,,贸易政策,商站+1🪙,1,buff_improvement,,wilderness,15,6
+P-B,policy,culture,1,,风力利用,解锁「风车」,1,unlock_improvement,windmill,pastoral,15,6
+P-AA,policy,culture,2,P-A,自由贸易,商业中心每相邻trading_post: +1🪙,1,add_adjacency,,wilderness,20,25
+P-AB,policy,culture,2,P-A,葡萄种植,解锁「葡萄园」,1,unlock_improvement,vineyard,wilderness,20,25
+P-BA,policy,culture,2,P-B,大众娱乐,解锁「娱乐中心」,1,unlock_district,entertainment,pastoral,20,25
+P-BB,policy,culture,2,P-B,文教兴邦,所有区域+1🎭,1,buff_district,,pastoral,20,25
+P-AAA,policy,culture,3,P-AA,丝路贸易,沙漠+1🪙+1🎭,1,buff_terrain,,wilderness,25,70
+P-AAB,policy,culture,3,P-AA,东方集市,解锁「集市」,1,unlock_improvement,bazaar,wilderness,25,70
+P-ABA,policy,culture,3,P-AB,酿酒工艺,葡萄园+1🪙+1🎭,1,buff_improvement,,wilderness,25,70
+P-ABB,policy,culture,3,P-AB,奢侈品税,所有luxury_resource额外+1🪙,1,buff_feature,,wilderness,25,70
+P-BAA,policy,culture,3,P-BA,节庆文化,娱乐中心+2🎭,1,buff_district,,pastoral,25,70
+P-BAB,policy,culture,3,P-BA,政府规划,解锁「政府广场」,1,unlock_district,government_plaza,pastoral,25,70
+P-BBA,policy,culture,3,P-BB,学术自由,学院的区域邻接从per_two变为per_each,1,modify_adjacency,,pastoral,25,70
+P-BBB,policy,culture,3,P-BB,艺术赞助,剧院每相邻natural: 额外+1🎭,1,add_adjacency,,pastoral,25,70
+P-AAAA,policy,culture,4,P-AAA,商路帝国,商站每相邻trading_post: +1🪙,1,add_adjacency,,wilderness,30,170
+P-AAAB,policy,culture,4,P-AAA,海上丝路,港口每相邻commercial_hub: +2🪙,1,add_adjacency,,wilderness,30,170
+P-AABA,policy,culture,4,P-AAB,市场经济,集市+2🪙,1,buff_improvement,,wilderness,30,170
+P-AABB,policy,culture,4,P-AAB,垄断贸易,商业中心被3+商站包围: 该商业中心+3🪙,1,pattern_bonus,,wilderness,30,170
+P-ABAA,policy,culture,4,P-ABA,庄园经济,葡萄园每相邻farm: +1🌾,1,add_adjacency,,wilderness,30,170
+P-ABAB,policy,culture,4,P-ABA,种植园主,种植园+1🪙+1🎭,1,buff_improvement,,wilderness,30,170
+P-ABBA,policy,culture,4,P-ABB,奢华殿堂,剧院每相邻luxury_resource: +1🎭,1,add_adjacency,,wilderness,30,170
+P-ABBB,policy,culture,4,P-ABB,国际都会,商业中心+1🪙+1🎭+1🔬,1,buff_district,,wilderness,30,170
+P-BAAA,policy,culture,4,P-BAA,全民狂欢,娱乐中心每相邻improvement: +1🎭,1,add_adjacency,,pastoral,30,170
+P-BAAB,policy,culture,4,P-BAA,大学城,解锁「大学城」区域,1,unlock_district,university,pastoral,30,170
+P-BABA,policy,culture,4,P-BAB,中央集权,政府广场每相邻district: +1⚙️,1,add_adjacency,,pastoral,30,170
+P-BABB,policy,culture,4,P-BAB,民主议会,政府广场+2🎭+2🔬,1,buff_district,,pastoral,30,170
+P-BBAA,policy,culture,4,P-BBA,文艺复兴,剧院+2🎭,1,buff_district,,pastoral,30,170
+P-BBAB,policy,culture,4,P-BBA,博物馆,所有natural地貌+1🎭,1,buff_feature,,pastoral,30,170
+P-BBBA,policy,culture,4,P-BBB,科教兴国,学院+1🔬+1🎭,1,buff_district,,pastoral,30,170
+P-BBBB,policy,culture,4,P-BBB,文化遗产,完整一环的每个地块+1🎭,1,pattern_bonus,,pastoral,30,170
+F-A,faith,faith,1,,自然崇拜,所有natural标签地貌+1🙏,1,buff_feature,,highland,15,6
+F-B,faith,faith,1,,修道制度,解锁「修道院」,1,unlock_improvement,monastery,woodland,15,6
+F-AA,faith,faith,2,F-A,温泉开发,解锁「温泉」,1,unlock_improvement,hot_spring,highland,20,25
+F-AB,faith,faith,2,F-A,万物有灵,山脉获得natural标签,1,terrain_alias,,highland,20,25
+F-BA,faith,faith,2,F-B,修道院区,解锁「修道院区」,1,unlock_district,monastery_district,woodland,20,25
+F-BB,faith,faith,2,F-B,圣林守护,解锁「圣林」,1,unlock_improvement,sacred_grove,woodland,20,25
+F-AAA,faith,faith,3,F-AA,地热神迹,地热+1🙏+1🔬,1,buff_feature,,highland,25,70
+F-AAB,faith,faith,3,F-AA,沙漠绿洲,沙漠获得fertile标签,1,terrain_alias,,highland,25,70
+F-ABA,faith,faith,3,F-AB,山岳信仰,圣地每相邻mountain: 额外+1🙏,1,add_adjacency,,highland,25,70
+F-ABB,faith,faith,3,F-AB,冰原圣域,冻土获得hill标签,1,terrain_alias,,highland,25,70
+F-BAA,faith,faith,3,F-BA,朝圣之路,修道院区每相邻holy_site: +2🙏,1,add_adjacency,,woodland,25,70
+F-BAB,faith,faith,3,F-BA,宗教热忱,圣地+2🙏,1,buff_district,,woodland,25,70
+F-BBA,faith,faith,3,F-BB,神圣植林,圣林+1🙏+1🎭,1,buff_improvement,,woodland,25,70
+F-BBB,faith,faith,3,F-BB,森林信仰,森林+1🙏+1🌾,1,buff_feature,,woodland,25,70
+F-AAAA,faith,faith,4,F-AAA,火山祭祀,火山岩+1🙏+1⚙️,1,buff_terrain,,highland,30,170
+F-AAAB,faith,faith,4,F-AAA,温泉文化,温泉+1🙏+1🎭,1,buff_improvement,,highland,30,170
+F-AABA,faith,faith,4,F-AAB,圣山,山脉可工作，产出2🙏,1,make_workable,,highland,30,170
+F-AABB,faith,faith,4,F-AAB,荒漠圣者,沙漠+1🙏+1🌾,1,buff_terrain,,highland,30,170
+F-ABAA,faith,faith,4,F-ABA,高山祭坛,圣地每相邻mountain: 额外+1🙏,1,add_adjacency,,highland,30,170
+F-ABAB,faith,faith,4,F-ABA,极地探索,冰原可工作，产出1🙏+1🌾,1,make_workable,,highland,30,170
+F-ABBA,faith,faith,4,F-ABB,神秘力量,所有natural标签地貌额外+1🙏,1,buff_feature,,highland,30,170
+F-ABBB,faith,faith,4,F-ABB,高原牧歌,高原+1🙏+1🌾,1,buff_terrain,,highland,30,170
+F-BAAA,faith,faith,4,F-BAA,宗教统治,修道院区+2🙏+1⚙️,1,buff_district,,woodland,30,170
+F-BAAB,faith,faith,4,F-BAA,苦行修炼,修道院每相邻mountain: +1🙏,1,add_adjacency,,woodland,30,170
+F-BABA,faith,faith,4,F-BAB,圣战,圣地+1🙏+1⚙️,1,buff_district,,woodland,30,170
+F-BABB,faith,faith,4,F-BAB,先知降临,圣地被3+natural地貌包围: 该圣地+3🙏,1,pattern_bonus,,woodland,30,170
+F-BBAA,faith,faith,4,F-BBA,世界树,圣林+2🙏+1🔬,1,buff_improvement,,woodland,30,170
+F-BBAB,faith,faith,4,F-BBA,老林崇拜,老林+1🙏+1🔬,1,buff_feature,,woodland,30,170
+F-BBBA,faith,faith,4,F-BBB,森林圣域,森林+1🙏+1⚙️,1,buff_feature,,woodland,30,170
+F-BBBB,faith,faith,4,F-BBB,自然和谐,所有vegetation标签+1🙏+1🌾,1,buff_feature,,woodland,30,170
