@@ -272,9 +272,14 @@ class ModelAgent(BaseAgent):
 
     name = "model"
 
+    # one traced graph per (model, candidate-count bucket) - re-tracing for every
+    # distinct action count would cost more than it saves
+    _TRACED: dict[int, object] = {}
+
     def __init__(self, model, encoder, temperature: float = 0.0, epsilon: float = 0.0,
                  avoid_repeats: bool = True) -> None:
         self.model = model
+        self._predict = self._traced_predict(model, encoder.state_dim, encoder.action_dim)
         self.encoder = encoder
         self.temperature = float(temperature)
         self.epsilon = float(epsilon)
@@ -288,19 +293,45 @@ class ModelAgent(BaseAgent):
         self._turn = -1
         self._used = set()
 
+    @classmethod
+    def _traced_predict(cls, model, state_dim: int, action_dim: int):
+        """Wrap the model in a tf.function with a fully dynamic candidate axis.
+
+        Calling a Keras model directly costs tens of milliseconds of Python
+        overhead per decision, and an agent makes hundreds of decisions per
+        game. Tracing once, with `None` only for the candidate axis (the feature
+        dimensions have to stay static for LayerNormalization), lets every
+        action count reuse the same graph.
+        """
+        key = id(model)
+        traced = cls._TRACED.get(key)
+        if traced is None:
+            import tensorflow as tf
+
+            @tf.function(reduce_retracing=True, input_signature=[{
+                "state": tf.TensorSpec([1, state_dim], tf.float32),
+                "actions": tf.TensorSpec([1, None, action_dim], tf.float32),
+                "mask": tf.TensorSpec([1, None], tf.float32),
+            }])
+            def _fn(inputs):
+                return model(inputs, training=False)
+
+            traced = _fn
+            cls._TRACED[key] = traced
+        return traced
+
     def logits(self, state: dict, actions: Sequence[dict]) -> np.ndarray:
         s = self.encoder.encode_state(state)[None, :]
         a = self.encoder.encode_actions(state, list(actions))[None, :, :]
         mask = np.ones((1, a.shape[1]), dtype=np.float32)
-        out = self.model({"state": s, "actions": a, "mask": mask}, training=False)
+        out = self._predict({"state": s, "actions": a, "mask": mask})
         return np.asarray(out["logits"])[0, : len(actions)].astype(np.float64)
 
     def value(self, state: dict, actions: Sequence[dict]) -> float:
         """The value head's estimate of the final score, in normalized units."""
         s = self.encoder.encode_state(state)[None, :]
         a = self.encoder.encode_actions(state, list(actions[:1]))[None, :, :]
-        out = self.model({"state": s, "actions": a, "mask": np.ones((1, 1), dtype=np.float32)},
-                         training=False)
+        out = self._predict({"state": s, "actions": a, "mask": np.ones((1, 1), dtype=np.float32)})
         return float(np.asarray(out["value"]).reshape(-1)[0])
 
     def select(self, state: dict, actions: Sequence[dict]) -> int:
