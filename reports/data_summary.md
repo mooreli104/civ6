@@ -1,6 +1,6 @@
 # Civ 6 game data - cleaned dataset summary
 
-Source: `civ6-roguelike-ai@2.1.0` from https://registry.npmjs.org (fetched 2026-08-17T08:20:46Z)
+Source: `civ6-roguelike-ai@2.1.0` from https://registry.npmjs.org (fetched 2026-08-17T09:42:29Z)
 
 | table | rows | columns |
 |---|---:|---:|
