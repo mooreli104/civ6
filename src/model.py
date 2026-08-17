@@ -89,3 +89,13 @@ def build_model(state_dim: int, action_dim: int, *, hidden: int = 256, embed: in
 
     return keras.Model(inputs={"state": state_in, "actions": actions_in, "mask": mask_in},
                        outputs={"logits": logits, "value": value}, name="civ6_policy")
+
+
+def load_policy(path: str):
+    """Load a saved policy.
+
+    Importing this module is what registers `BroadcastState`, `MaskLogits` and
+    `SqueezeLast` with Keras, so always load through here - a bare
+    `keras.models.load_model` in a fresh process cannot resolve them.
+    """
+    return keras.models.load_model(path, compile=False)

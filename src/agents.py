@@ -261,36 +261,77 @@ class ModelAgent(BaseAgent):
     """Plays with the trained TensorFlow policy.
 
     `temperature=0` gives the greedy policy used for evaluation; positive values
-    sample from the policy, which is how later self-improvement rounds explore.
+    sample from it, which is how later self-improvement rounds explore.
+
+    The network is memoryless: it sees a state and a legal-action list, so
+    nothing stops it from re-picking an idempotent action (a worker reshuffle
+    that changes nothing) forever. The training data never contains such
+    repeats - the heuristic teacher refuses them - so the same constraint is
+    applied here, keeping inference inside the distribution the policy learned.
     """
 
     name = "model"
 
-    def __init__(self, model, encoder, temperature: float = 0.0, epsilon: float = 0.0) -> None:
+    def __init__(self, model, encoder, temperature: float = 0.0, epsilon: float = 0.0,
+                 avoid_repeats: bool = True) -> None:
         self.model = model
         self.encoder = encoder
         self.temperature = float(temperature)
         self.epsilon = float(epsilon)
+        self.avoid_repeats = avoid_repeats
         self.rng = random.Random(0)
+        self._turn = -1
+        self._used: set[tuple] = set()
+
+    def reset(self, seed: int = 0) -> None:
+        self.rng = random.Random(seed)
+        self._turn = -1
+        self._used = set()
 
     def logits(self, state: dict, actions: Sequence[dict]) -> np.ndarray:
         s = self.encoder.encode_state(state)[None, :]
         a = self.encoder.encode_actions(state, list(actions))[None, :, :]
         mask = np.ones((1, a.shape[1]), dtype=np.float32)
         out = self.model({"state": s, "actions": a, "mask": mask}, training=False)
-        return np.asarray(out["logits"])[0, : len(actions)]
+        return np.asarray(out["logits"])[0, : len(actions)].astype(np.float64)
+
+    def value(self, state: dict, actions: Sequence[dict]) -> float:
+        """The value head's estimate of the final score, in normalized units."""
+        s = self.encoder.encode_state(state)[None, :]
+        a = self.encoder.encode_actions(state, list(actions[:1]))[None, :, :]
+        out = self.model({"state": s, "actions": a, "mask": np.ones((1, 1), dtype=np.float32)},
+                         training=False)
+        return float(np.asarray(out["value"]).reshape(-1)[0])
 
     def select(self, state: dict, actions: Sequence[dict]) -> int:
+        turn = state.get("turn", 0)
+        if turn != self._turn:
+            self._turn = turn
+            self._used = set()
+
         if self.epsilon > 0 and self.rng.random() < self.epsilon:
-            return self.rng.randrange(len(actions))
-        logits = self.logits(state, actions)
-        if self.temperature <= 1e-6:
-            return int(np.argmax(logits))
-        z = logits / self.temperature
-        z -= z.max()
-        p = np.exp(z)
-        p /= p.sum()
-        return int(self.rng.choices(range(len(actions)), weights=p.tolist(), k=1)[0])
+            choice = self.rng.randrange(len(actions))
+        else:
+            logits = self.logits(state, actions)
+            if self.avoid_repeats:
+                blocked = [i for i, a in enumerate(actions)
+                           if HeuristicAgent._signature(a) in self._used]
+                if len(blocked) < len(actions):
+                    logits[blocked] = -np.inf
+            if self.temperature <= 1e-6:
+                choice = int(np.argmax(logits))
+            else:
+                z = logits / self.temperature
+                z -= z.max()
+                p = np.exp(z)
+                total = p.sum()
+                if not np.isfinite(total) or total <= 0:
+                    choice = int(np.argmax(logits))
+                else:
+                    p /= total
+                    choice = int(self.rng.choices(range(len(actions)), weights=p.tolist(), k=1)[0])
+        self._used.add(HeuristicAgent._signature(actions[choice]))
+        return choice
 
 
 def make_agent(spec: str, **kwargs) -> BaseAgent:

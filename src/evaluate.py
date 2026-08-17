@@ -43,11 +43,11 @@ def _init_worker() -> None:
 def _agent_for(spec: str):
     from agents import make_agent
     if spec.startswith("model:"):
-        import tensorflow as tf
         from agents import ModelAgent
+        from model import load_policy
         _, path, temp = spec.split(":", 2)
         if _WORKER.get("model_path") != path:
-            _WORKER["model"] = tf.keras.models.load_model(path, compile=False)
+            _WORKER["model"] = load_policy(path)
             _WORKER["model_path"] = path
         return ModelAgent(_WORKER["model"], _WORKER["encoder"], temperature=float(temp))
     return make_agent(spec)
@@ -66,10 +66,18 @@ def _play(job: tuple[int, str]) -> dict:
 
 def evaluate(specs: list[str], games: int, seed0: int, workers: int) -> pd.DataFrame:
     jobs = [(seed0 + i, spec) for spec in specs for i in range(games)]
+    # interleave so progress reflects all agents, not one agent at a time
+    jobs.sort(key=lambda j: (j[0], j[1]))
     ctx = mp.get_context("spawn")
     t0 = time.time()
+    print(f"[eval] {len(jobs)} games ({games} per agent x {len(specs)} agents) on {workers} workers",
+          flush=True)
     with ctx.Pool(workers, initializer=_init_worker) as pool:
-        rows = list(pool.imap_unordered(_play, jobs, chunksize=2))
+        rows = []
+        for i, row in enumerate(pool.imap_unordered(_play, jobs, chunksize=2), 1):
+            rows.append(row)
+            if i % max(len(jobs) // 10, 1) == 0:
+                print(f"  {i}/{len(jobs)} games ({time.time() - t0:.0f}s)", flush=True)
     print(f"[eval] {len(jobs)} games in {time.time() - t0:.0f}s")
     return pd.DataFrame(rows)
 
@@ -87,10 +95,11 @@ def summarize(df: pd.DataFrame, reference: str) -> pd.DataFrame:
     pivot = df.pivot_table(index="seed", columns="spec", values="score")
     if reference in pivot.columns:
         wins, lifts = {}, {}
+        ref = pivot[reference]
         for spec in pivot.columns:
-            pair = pivot[[spec, reference]].dropna()
-            wins[spec] = float((pair[spec] > pair[reference]).mean().round(3))
-            lifts[spec] = float((pair[spec] - pair[reference]).mean().round(1))
+            pair = pd.concat([pivot[spec], ref], axis=1, keys=["a", "b"]).dropna()
+            wins[spec] = round(float((pair["a"] > pair["b"]).mean()), 3)
+            lifts[spec] = round(float((pair["a"] - pair["b"]).mean()), 1)
         agg[f"win_vs_{reference}"] = pd.Series(wins)
         agg[f"lift_vs_{reference}"] = pd.Series(lifts)
     return agg.sort_values("mean", ascending=False)

@@ -50,12 +50,12 @@ def _build_agent(spec: str):
     """Agent specs are strings so they survive the trip to worker processes."""
     if spec.startswith("model:"):
         _, model_path, temp, eps = spec.split(":")
-        import tensorflow as tf  # imported lazily; workers without models skip TF
+        from agents import ModelAgent  # imported lazily; TF only loads in model runs
+        from model import load_policy
 
-        from agents import ModelAgent
         model = _WORKER.get("model")
         if model is None or _WORKER.get("model_path") != model_path:
-            model = tf.keras.models.load_model(model_path, compile=False)
+            model = load_policy(model_path)
             _WORKER["model"] = model
             _WORKER["model_path"] = model_path
         return ModelAgent(model, _WORKER["encoder"], temperature=float(temp), epsilon=float(eps))
