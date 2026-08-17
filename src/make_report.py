@@ -59,7 +59,7 @@ def main() -> None:
         meta = json.loads(meta_path.read_text())
         last = meta["history"][-1] if meta.get("history") else {}
         train_rows.append({
-            "model": meta["name"], "decisions": meta["n_decisions"], "elite games": meta["n_games"],
+            "model": meta_path.name.replace("_meta.json", ""), "decisions": meta["n_decisions"], "elite games": meta["n_games"],
             "val top-1": round(last.get("val_top1", float("nan")), 3),
             "val top-3": round(last.get("val_top3", float("nan")), 3),
             "best val loss": round(meta.get("best_val_policy_loss", float("nan")), 4),

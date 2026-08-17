@@ -1,0 +1,14 @@
+[
+  {
+    "round": 1,
+    "tag": "selfplay1",
+    "model": "models/policy_round1.keras",
+    "evaluation": "/home/user/civ6/reports/evaluation_policy_round1.csv"
+  },
+  {
+    "round": 2,
+    "tag": "selfplay2",
+    "model": "models/policy_round2.keras",
+    "evaluation": "/home/user/civ6/reports/evaluation_policy_round2.csv"
+  }
+]

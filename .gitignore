@@ -5,5 +5,4 @@ data/raw/
 data/episodes/
 __pycache__/
 *.pyc
-models/*/variables/
 .DS_Store

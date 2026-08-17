@@ -1,5 +1,5 @@
 {
-  "name": "policy_round1",
+  "name": "policy_unpaired1",
   "tags": [
     "bootstrap",
     "selfplay1"
@@ -144,5 +144,6 @@
       "secs": 21.797264575958252
     }
   ],
-  "best_val_policy_loss": 1.0450721164544423
+  "best_val_policy_loss": 1.0450721164544423,
+  "note": "trained with unpaired (global) elite selection; kept for comparison"
 }
