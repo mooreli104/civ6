@@ -68,22 +68,22 @@ def _init_worker() -> None:
     _WORKER["encoder"] = FeatureEncoder()
 
 
-def _search_one(job: tuple[int, str]) -> dict:
-    seed, spec = job
+def _search_one(job: tuple[int, int, str]) -> dict:
+    seed, agent_seed, spec = job
     agent = _build_agent(spec)
-    result = play_episode(_WORKER["env"], agent, seed=seed)
+    result = play_episode(_WORKER["env"], agent, seed=seed, agent_seed=agent_seed)
     row = asdict(result)
     row.pop("records")
     row["spec"] = spec
     return row
 
 
-def _record_one(job: tuple[int, str]) -> dict:
+def _record_one(job: tuple[int, int, str]) -> dict:
     """Replay one elite game and encode every decision."""
-    seed, spec = job
+    seed, agent_seed, spec = job
     enc: FeatureEncoder = _WORKER["encoder"]
     agent = _build_agent(spec)
-    rng = np.random.default_rng(seed)
+    rng = np.random.default_rng(agent_seed)
 
     states: list[np.ndarray] = []
     cands: list[np.ndarray] = []
@@ -112,7 +112,8 @@ def _record_one(job: tuple[int, str]) -> dict:
         choices.append(idxs.index(choice))
         turns.append(int(state.get("turn", 0)))
 
-    result = play_episode(_WORKER["env"], agent, seed=seed, on_decision=on_decision)
+    result = play_episode(_WORKER["env"], agent, seed=seed, agent_seed=agent_seed,
+                          on_decision=on_decision)
     return {
         "seed": seed, "spec": spec, "score": result.score, "turns": result.turns,
         "states": np.asarray(states, dtype=np.float16),
@@ -124,12 +125,24 @@ def _record_one(job: tuple[int, str]) -> dict:
 
 
 def run(tag: str, specs: list[str], n_games: int, elite_frac: float, seed0: int,
-        workers: int, shard_size: int) -> pd.DataFrame:
+        workers: int, shard_size: int, group: int = 1) -> pd.DataFrame:
     EPISODES.mkdir(parents=True, exist_ok=True)
     REPORTS.mkdir(parents=True, exist_ok=True)
 
-    jobs = [(seed0 + i, specs[i % len(specs)]) for i in range(n_games)]
-    print(f"[gen:{tag}] search pass: {n_games} games over {len(specs)} agent specs on {workers} workers")
+    # With group > 1 the same board is played several times with different agent
+    # randomness. Scores can then be compared within a board, so elite selection
+    # picks better *play* rather than easier boards - the variance between seeds
+    # is larger than the variance between policies, and unpaired selection just
+    # collects lucky maps.
+    n_boards = max(n_games // group, 1)
+    jobs = []
+    for b in range(n_boards):
+        for k in range(group):
+            i = b * group + k
+            jobs.append((seed0 + b, seed0 + 7_919 * (k + 1) + b, specs[i % len(specs)]))
+    n_games = len(jobs)
+    print(f"[gen:{tag}] search pass: {n_games} games ({n_boards} boards x {group} runs) "
+          f"over {len(specs)} agent specs on {workers} workers")
     t0 = time.time()
     ctx = mp.get_context("spawn")
     with ctx.Pool(workers, initializer=_init_worker) as pool:
@@ -143,8 +156,17 @@ def run(tag: str, specs: list[str], n_games: int, elite_frac: float, seed0: int,
     index = pd.DataFrame(rows).sort_values("score", ascending=False).reset_index(drop=True)
     index.to_csv(EPISODES / f"{tag}_index.csv", index=False)
 
-    n_elite = max(int(len(index) * elite_frac), 1)
-    elite = index.head(n_elite)
+    if group > 1:
+        # keep the runs that beat their own board's average, best first
+        index["board_mean"] = index.groupby("seed")["score"].transform("mean")
+        index["advantage"] = index["score"] - index["board_mean"]
+        n_elite = max(int(len(index) * elite_frac), 1)
+        elite = index.sort_values("advantage", ascending=False).head(n_elite)
+        print(f"[gen:{tag}] paired selection: mean advantage of kept runs "
+              f"{elite['advantage'].mean():.1f} over their own boards")
+    else:
+        n_elite = max(int(len(index) * elite_frac), 1)
+        elite = index.head(n_elite)
     elite.to_csv(EPISODES / f"{tag}_elite.csv", index=False)
     cutoff = float(elite["score"].min())
     print(f"[gen:{tag}] search done in {time.time() - t0:.0f}s | "
@@ -155,7 +177,7 @@ def run(tag: str, specs: list[str], n_games: int, elite_frac: float, seed0: int,
     t1 = time.time()
     shard, shard_id, n_samples = [], 0, 0
     with ctx.Pool(workers, initializer=_init_worker) as pool:
-        elite_jobs = [(int(r.seed), str(r.spec)) for r in elite.itertuples()]
+        elite_jobs = [(int(r.seed), int(r.agent_seed), str(r.spec)) for r in elite.itertuples()]
         for i, out in enumerate(pool.imap_unordered(_record_one, elite_jobs, chunksize=2), 1):
             if len(out["states"]) == 0:
                 continue
@@ -215,8 +237,11 @@ def main() -> None:
     ap.add_argument("--seed0", type=int, default=0)
     ap.add_argument("--workers", type=int, default=max(mp.cpu_count() - 1, 1))
     ap.add_argument("--shard-size", type=int, default=40000)
+    ap.add_argument("--group", type=int, default=1,
+                    help="runs per board; >1 enables paired (board-normalized) elite selection")
     args = ap.parse_args()
-    run(args.tag, args.specs, args.games, args.elite_frac, args.seed0, args.workers, args.shard_size)
+    run(args.tag, args.specs, args.games, args.elite_frac, args.seed0, args.workers,
+        args.shard_size, args.group)
 
 
 if __name__ == "__main__":

@@ -40,6 +40,7 @@ def _pick_escape(actions, failing_type: str | None) -> int:
 @dataclass
 class EpisodeResult:
     seed: int
+    agent_seed: int
     agent: str
     score: float
     science: float
@@ -59,11 +60,18 @@ def play_episode(
     agent,
     seed: int,
     *,
+    agent_seed: int | None = None,
     record: bool = False,
     on_decision: Callable[[dict, Sequence[dict], int], None] | None = None,
 ) -> EpisodeResult:
-    """Play one full game. Optionally record every (state, actions, choice)."""
-    agent.reset(seed)
+    """Play one full game. Optionally record every (state, actions, choice).
+
+    `seed` fixes the board and shop rolls; `agent_seed` fixes the agent's own
+    randomness. Keeping them separate is what lets several noisy runs share one
+    board, so episodes can be compared without board luck confounding them.
+    """
+    agent_seed = seed if agent_seed is None else agent_seed
+    agent.reset(agent_seed)
     obs: Observation = env.reset(seed=seed)
 
     records: list[dict[str, Any]] = []
@@ -113,6 +121,7 @@ def play_episode(
     score = obs.score or {}
     return EpisodeResult(
         seed=seed,
+        agent_seed=agent_seed,
         agent=getattr(agent, "name", "agent"),
         score=float(score.get("total", 0.0)),
         science=float(score.get("science", 0.0)),

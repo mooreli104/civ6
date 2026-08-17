@@ -44,6 +44,8 @@ def main() -> None:
     ap.add_argument("--temps", nargs="+", default=["0.3", "0.6"],
                     help="sampling temperatures used when generating self-play games")
     ap.add_argument("--workers", type=int, default=3)
+    ap.add_argument("--group", type=int, default=4,
+                    help="noisy runs per board; paired selection needs >1")
     args = ap.parse_args()
 
     model = args.base_model
@@ -54,7 +56,7 @@ def main() -> None:
         tag = f"selfplay{rnd}"
         specs = [f"model:{model}:{t}:0.05" for t in args.temps]
         sh([PY, "src/generate_episodes.py", "--tag", tag, "--games", args.games,
-            "--elite-frac", args.elite_frac, "--seed0", 100_000 * rnd,
+            "--elite-frac", args.elite_frac, "--seed0", 100_000 * rnd, "--group", args.group,
             "--workers", args.workers, "--specs", *specs])
 
         tags.append(tag)
